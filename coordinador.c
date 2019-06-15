@@ -5,14 +5,14 @@
 #include <time.h>
 
 struct jugador {
-  mano dados;
+  CLIENT *clnt;
   mipuntaje puntaje;
-}
+};
 
 int main(int argc,char *argv[]) {
   char *server;
   int cantJugadores = argc - 1;
-  CLIENT *jugadores[cantJugadores];
+  struct jugador jugadores[cantJugadores];
   mano dados;
   int i;
   srandom(time(NULL));
@@ -22,16 +22,17 @@ int main(int argc,char *argv[]) {
   }
   for (i=0; i<cantJugadores; i++){
     server = argv[i+1];
-    jugadores[i] = clnt_create(server,GENERALA, VER1, "TCP");
-    if(jugadores[i] == (CLIENT *) NULL) {
+    jugadores[i].clnt = clnt_create(server,GENERALA, VER1, "TCP");
+    if(jugadores[i].clnt == (CLIENT *) NULL) {
       printf("Error al conectarse al jugador \"%s\"\n",server);
       exit(1);
     }
+    jugadores[i].puntaje.categorias[i]=0;   //Inicializa el puntaje de cada categoria de cada jugador.
   }
   // Se establecio conexion con todos los jugadores.
   // Se envia la bienvenida y la cantidad de usuarios
   for (i=0;i<cantJugadores;i++){
-    inicio_1(&cantJugadores,jugadores[i]);
+    inicio_1(&cantJugadores,jugadores[i].clnt);
   }
   // Se inicia el juego, se envian los
   int ronda,jugador,j,tiros,tirada;
@@ -45,9 +46,9 @@ int main(int argc,char *argv[]) {
         for(j=0;j<cantJugadores;j++){
           // Se envian los dados obtenidos a todos los jugadores.
           if(j!=jugador)  // Caso especial para el jugador que esta en su turno
-            mostrardados_1(&dados,jugadores[j]);
+            mostrardados_1(&dados,jugadores[j].clnt);
           else
-            dados = *elegirdados_1(&dados,jugadores[j]);
+            dados = *elegirdados_1(&dados,jugadores[j].clnt);
         }
         // Ver cuantos dados eligió y cuantos tiene que tirar otra vez;
         tiros = 5;
