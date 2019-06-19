@@ -20,12 +20,12 @@ typedef struct puntajesstruct puntajes;
 typedef struct mipuntajestruct mipuntaje;
 program GENERALA {
   version VER1 {
-    void mostrardados(mano) = 1;
+    int mostrardados(mano) = 1;
     mano elegirdados(mano) = 2;
-    void mostrarpuntajes(puntajes) = 3;
-    void mostrarmipuntaje(mipuntaje) = 4;
+    int mostrarpuntajes(puntajes) = 3;
+    int mostrarmipuntaje(mipuntaje) = 4;
     int elegirmano(mipuntaje) = 5;
-    void fin(puntajes) = 6;
-    void inicio(int) = 7;
+    int fin(puntajes) = 6;
+    int inicio(int) = 7;
   } = 1;
 } = 0x200F0B01;

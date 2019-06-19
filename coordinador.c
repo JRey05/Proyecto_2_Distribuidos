@@ -40,7 +40,7 @@ int main(int argc,char *argv[]) {
   // Se establecio conexion con todos los jugadores.
   // Se envia la bienvenida y la cantidad de usuarios
   for (i=0;i<cantJugadores;i++){
-    inicio_1(&cantJugadores,jugadores[i].clnt);
+    inicio_1(&i,jugadores[i].clnt);
   }
   // Se inicia el juego, se envian los
   int ronda,jugador,tiros,tirada;
@@ -112,7 +112,7 @@ int main(int argc,char *argv[]) {
       // Generala doble
       if((jugada.dados[0]==5 || jugada.dados[1]==5 || jugada.dados[2]==5 || jugada.dados[3]==5 || jugada.dados[4]==5 || jugada.dados[5]==5) && jugadores[jugador].puntaje.categorias[9]!=0 && jugadores[jugador].puntaje.categorias[9]!=-1)
         puntajeTurno.categorias[10] = 100;
-        
+
       // Pensar un poco mejor esto, esta enviando -1 si la categoria (1-6) ya fue jugada.
       for (i=6;i<11;i++) {
         if(jugadores[jugador].puntaje.categorias[i]!=0)

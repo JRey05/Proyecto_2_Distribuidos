@@ -129,7 +129,7 @@ void dibujarLinea4(mano *dados){
   printf("\n");
 }
 
-void * mostrardados_1_svc(mano * m, struct svc_req *cliente){
+int * mostrardados_1_svc(mano * m, struct svc_req *cliente){
 	/*
 	printf("------------------------------------------------------\n");
 	int i;
@@ -154,15 +154,16 @@ void * mostrardados_1_svc(mano * m, struct svc_req *cliente){
 				dibujar6();
 				break;
 		}
-		printf("\t(%i)\n\n",i);		//dibujo un (1) debajo del primer dado, un (2) debajo del 2do, y asi...	
+		printf("\t(%i)\n\n",i);		//dibujo un (1) debajo del primer dado, un (2) debajo del 2do, y asi...
 	}
 	*/
 	dibujarLinea1(m);
 	dibujarLinea2(m);
 	dibujarLinea3(m);
 	dibujarLinea4(m);
-	static void* var;
-	return(var);
+	static int var;
+  var = 1;
+	return(&var);
 }
 
 mano * elegirdados_1_svc(mano * m, struct svc_req *cliente){
@@ -193,7 +194,7 @@ mano * elegirdados_1_svc(mano * m, struct svc_req *cliente){
 	return &misdados;
 }
 
-void * mostrarpuntajes_1_svc(puntajes * p,struct svc_req *cliente){
+int * mostrarpuntajes_1_svc(puntajes * p,struct svc_req *cliente){
   int i;
   int pts,turn;
   printf("------------------Puntajes------------------\n");
@@ -208,14 +209,15 @@ void * mostrarpuntajes_1_svc(puntajes * p,struct svc_req *cliente){
   		printf("|---->Jugador %i<----|----------%i----------|\n",i+1,pts);	//es el turno de este jugador
   	}
   	else{
-  		printf("|-----Jugador %i-----|----------%i----------|\n",i+1,pts);	
+  		printf("|-----Jugador %i-----|----------%i----------|\n",i+1,pts);
   	}
   }
-  static void* var;
-  return(var);
+  static int var;
+  var = 1;
+  return(&var);
 }
 
-void * mostrarmipuntaje_1_svc(mipuntaje * mp, struct svc_req *cliente){
+int * mostrarmipuntaje_1_svc(mipuntaje * mp, struct svc_req *cliente){
 	//orden: 1, 2, 3, 4, 5, 6, escalera, full, poker, generala, generala doble
 	int total=0;
 	int i;
@@ -226,7 +228,7 @@ void * mostrarmipuntaje_1_svc(mipuntaje * mp, struct svc_req *cliente){
 			sprintf(c[i],"%d",mp->categorias[i]);
 		}
 		else{
-			strcpy(c[i],"x");	//representa una categoria tachada	
+			strcpy(c[i],"x");	//representa una categoria tachada
 		}
 	}
 	printf("------------------Mi puntaje-------------------\n");
@@ -247,8 +249,9 @@ void * mostrarmipuntaje_1_svc(mipuntaje * mp, struct svc_req *cliente){
 	printf("|______________________|_______________________|\n");
   	printf("|--------Total---------|----------%i-----------|\n",total);
 	printf("|______________________|_______________________|\n");
-  	static void* var;
-  	return(var);
+  	static int var;
+    var = 1;
+  	return(&var);
 
 }
 
@@ -301,7 +304,7 @@ int * elegirmano_1_svc(mipuntaje * mp,struct svc_req *cliente){
 }
 
 
-void * fin_1_svc(puntajes * p,struct svc_req *cliente){
+int * fin_1_svc(puntajes * p,struct svc_req *cliente){
 	int i;
   	int pts,turn,ganador;
   	int max=0;
@@ -320,17 +323,19 @@ void * fin_1_svc(puntajes * p,struct svc_req *cliente){
 			printf("|---->Jugador %i<----|----------%i----------|\n",i+1,pts);	//es el turno de este jugador
 		}
 		else{
-			printf("|-----Jugador %i-----|----------%i----------|\n",i+1,pts);	
+			printf("|-----Jugador %i-----|----------%i----------|\n",i+1,pts);
 		}
 	}
 	printf("Ganador Jugador %i!!",ganador);
-	static void* var;
-	return(var);
+	static int var;
+  var = 1;
+	return(&var);
 }
 
-void * inicio_1_svc(int * n,struct svc_req *cliente){
+int * inicio_1_svc(int * n,struct svc_req *cliente){
 	printf("--------------COMIENZO DEL JUEGO----------------\n");
-	printf("--------Usted es el Jugador %i, suerte!---------\n",*n);
-	static void* var;
-	return(var);
+	printf("--------Usted es el Jugador %i, suerte!---------\n",*n+1);
+	static int var;
+  var = 1;
+	return(&var);
 }
