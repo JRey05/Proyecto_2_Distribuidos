@@ -14,8 +14,8 @@ int main(int argc,char *argv[]) {
   int cantJugadores = argc - 1;               // Variable que almacena la cantidad de jugadores pasados por parametro
   struct jugador jugadores[cantJugadores];    // Arreglo de todos los jugadores.
   mano dados;                                 //
-  mano jugada;
-  int i,j;                                      // Variable de control
+  int jugada[6];                              // Arreglo para contar la cantidad de dados con cada valor.
+  int i,j;                                    // Variable de control
   int opcion;                                 // Almacenara la eleccion que haga el jugador
   mipuntaje puntajeTurno;                     // Enviara los puntos que puede optar el jugador
   puntajes tablaPuntos;                       // Almacena los puntos de todos los jugadores y de quien es el turno.
@@ -41,7 +41,7 @@ int main(int argc,char *argv[]) {
   // Se envia la bienvenida y la cantidad de usuarios
   ini.cantidadJugadores=cantJugadores;
   for (i=0;i<cantJugadores;i++){
-    ini.nroJugador=j+1;
+    ini.nroJugador=i+1;
     inicio_1(&ini,jugadores[i].clnt);
   }
   // Se inicia el juego, se envian los
@@ -55,15 +55,16 @@ int main(int argc,char *argv[]) {
       }
       mostrarmipuntaje_1(&jugadores[jugador].puntaje,jugadores[jugador].clnt);
       tiros = 5;  //la primera vez se tiran los 5 dados, luego depende de lo que decida el jugador.
-      for (tirada=0; tirada<3 || tiros==0; tirada++){ // Se hacen 3 tiradas o hasta que el jugador haya bloqueado los 5 dados.
+      for (tirada=0; tirada<3 && tiros!=0; tirada++){ // Se hacen 3 tiradas o hasta que el jugador haya bloqueado los 5 dados.
         for(i=0;i<tiros;i++){
-          dados.dados[tiros-i]=(random()%6)+1; //se almacenan de atras para adelante para reemplazar los 0 que indican que un jugador no bloqueo
+          dados.dados[5-(i+1)]=(random()%6)+1; //se almacenan de atras para adelante para reemplazar los 0 que indican que un jugador no bloqueo
         }
         for(j=0;j<cantJugadores;j++){
           // Se envian los dados obtenidos a todos los jugadores.
           mostrardados_1(&dados,jugadores[j].clnt);
         }
-        dados = *elegirdados_1(&dados,jugadores[jugador].clnt);
+        if(tirada<2)
+          dados = *elegirdados_1(&dados,jugadores[jugador].clnt);
         // Ver cuantos dados eligió y cuantos tiene que tirar otra vez;
         tiros = 5;
         for (j=0;j<5;j++) {
@@ -73,44 +74,60 @@ int main(int argc,char *argv[]) {
       }
       // Contar la cantidad de datos con cada numero.
       // Inicializamos una estructura mano con 0 en los 6 casilleros.
-      for (i=0; i<5; i++){
-        jugada.dados[i]=0;
+      for (i=0; i<6; i++){
+        jugada[i]=0;
       }
       // Se le asigna a cada posicion del arreglo la cantidad de dados con ese numero.
       for (i=0; i<5; i++){
-        jugada.dados[dados.dados[i]-1]++;
+        jugada[dados.dados[i]-1]+=1;
+      }
+      for(i=0; i<11; i++){
+        puntajeTurno.categorias[i]=0;
       }
       //Contar la cantidad de puntos posibles.
       // 1 - 6
       for (i=0;i<6;i++) {
         if(jugadores[jugador].puntaje.categorias[i]!=0)   //Verificar que la categoria no se haya jugado.
-          puntajeTurno.categorias[i]=jugadores[jugador].puntaje.categorias[i];
+        //  puntajeTurno.categorias[i]=jugadores[jugador].puntaje.categorias[i];
+          puntajeTurno.categorias[i]=-1;
         else
-          puntajeTurno.categorias[i]=(i+1)*jugada.dados[i];
+          puntajeTurno.categorias[i]=(i+1)*jugada[i];
       }
       // Resto de las categorias
       // Primero se calcula si consigue alguno de los valores utiles y despues si la categoria ya se habia jugado.
       // Escalera.
-      if(jugada.dados[1] && jugada.dados[2] && jugada.dados[3] && jugada.dados[4] && (jugada.dados[0] || jugada.dados[5])) {
-        puntajeTurno.categorias[6] = 20;
+      if(jugada[1] && jugada[2] && jugada[3] && jugada[4] && (jugada[0] || jugada[5])) {
+        if(tirada==1)
+          puntajeTurno.categorias[6] = 25;
+        else
+          puntajeTurno.categorias[6] = 20;
       }
 
       // Full
-      if((jugada.dados[0]==3 || jugada.dados[1]==3 || jugada.dados[2]==3 || jugada.dados[3]==3 || jugada.dados[4]==3 || jugada.dados[5]==3) && (jugada.dados[0]==2 || jugada.dados[1]==2 || jugada.dados[2]==2 || jugada.dados[3]==2 || jugada.dados[4]==2 || jugada.dados[5]==2)) {
-        puntajeTurno.categorias[7] = 30;
+      if((jugada[0]==3 || jugada[1]==3 || jugada[2]==3 || jugada[3]==3 || jugada[4]==3 || jugada[5]==3) && (jugada[0]==2 || jugada[1]==2 || jugada[2]==2 || jugada[3]==2 || jugada[4]==2 || jugada[5]==2)) {
+        if(tirada==1)
+          puntajeTurno.categorias[7] = 35;
+        else
+          puntajeTurno.categorias[7] = 30;
       }
 
       // Poker
-      if(jugada.dados[0]==4 || jugada.dados[1]==4 || jugada.dados[2]==4 || jugada.dados[3]==4 || jugada.dados[4]==4 || jugada.dados[5]==4) {
-        puntajeTurno.categorias[8] = 40;
+      if(jugada[0]>=4 || jugada[1]>=4 || jugada[2]>=4 || jugada[3]>=4 || jugada[4]>=4 || jugada[5]>=4) {
+        if(tirada==1)
+          puntajeTurno.categorias[8] = 45;
+        else
+          puntajeTurno.categorias[8] = 40;
       }
 
       // Generala
-      if(jugada.dados[0]==5 || jugada.dados[1]==5 || jugada.dados[2]==5 || jugada.dados[3]==5 || jugada.dados[4]==5 || jugada.dados[5]==5)
+      if(jugada[0]==5 || jugada[1]==5 || jugada[2]==5 || jugada[3]==5 || jugada[4]==5 || jugada[5]==5)
+      if(tirada==1){}
+        //WINNER{
+      else
         puntajeTurno.categorias[9] = 50;
 
       // Generala doble
-      if((jugada.dados[0]==5 || jugada.dados[1]==5 || jugada.dados[2]==5 || jugada.dados[3]==5 || jugada.dados[4]==5 || jugada.dados[5]==5) && jugadores[jugador].puntaje.categorias[9]!=0 && jugadores[jugador].puntaje.categorias[9]!=-1)
+      if((jugada[0]==5 || jugada[1]==5 || jugada[2]==5 || jugada[3]==5 || jugada[4]==5 || jugada[5]==5) && jugadores[jugador].puntaje.categorias[9]!=0 && jugadores[jugador].puntaje.categorias[9]!=-1)
         puntajeTurno.categorias[10] = 100;
 
       // Pensar un poco mejor esto, esta enviando -1 si la categoria (1-6) ya fue jugada.
@@ -119,6 +136,7 @@ int main(int argc,char *argv[]) {
           puntajeTurno.categorias[i]=-1;
       }
       opcion = *elegirmano_1(&puntajeTurno,jugadores[jugador].clnt);
+      printf("loquesea\n");
       jugadores[jugador].puntaje.categorias[opcion-1]=puntajeTurno.categorias[opcion-1];
       if(puntajeTurno.categorias[opcion-1]!=-1)
         tablaPuntos.puntos[jugador]+=puntajeTurno.categorias[opcion-1];

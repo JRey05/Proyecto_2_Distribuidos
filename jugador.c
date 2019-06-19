@@ -128,6 +128,9 @@ void dibujarLinea4(mano *dados){
   }
   printf("\n");
 }
+void dibujarLinea5(){
+  printf("(1)\t(2)\t(3)\t(4)\t(5)\n");
+}
 
 int * mostrardados_1_svc(mano * m, struct svc_req *cliente){
 	/*
@@ -161,6 +164,7 @@ int * mostrardados_1_svc(mano * m, struct svc_req *cliente){
 	dibujarLinea2(m);
 	dibujarLinea3(m);
 	dibujarLinea4(m);
+	dibujarLinea5();
 	static int var;
   var = 1;
 	return(&var);
@@ -175,22 +179,28 @@ mano * elegirdados_1_svc(mano * m, struct svc_req *cliente){
 	int slen = strlen(s);
 	int i,num;
 	int j=0;
-	for (i=0;i++;i<slen){		//recorro el string ingresado y capturo los primeros 5 digitos entre 1 y 5
-		if (isdigit(s[i])){
+	for (i=0;i<slen;i++){		//recorro el string ingresado y capturo los primeros 5 digitos entre 1 y 5
+
+    if (isdigit(s[i])){
 			num = s[i] - '0';			//conversion digito a int
 			if ((num<6)&&(num>0)){
-				misdados.dados[j]=m->dados[num];
+				misdados.dados[j]=m->dados[num-1];
 				j++;
+        printf("%i\n",num);
 			}
 		}
 		if (j==5) {		//ya encontre 5 digitos en el mensaje, estos seran los dados, salgo del bucle for
-			break;
+      break;
 		}
 	}
 	int k;
-	for (k=5;k--;k<j){
+	for (k=5;k<j;k--){
 		misdados.dados[k]==0;	//un 0 representa un dado que no fue elegido
 	}
+  for(k=0;k<5;k++) {
+    printf("%d,",misdados.dados[k]);
+  }
+  printf("\n");
 	return &misdados;
 }
 
@@ -264,6 +274,10 @@ int * elegirmano_1_svc(mipuntaje * mp,struct svc_req *cliente){
 	int i;
 	char* c[11];
 	char* o[11];
+  for(i=0;i<11;i++){
+    c[i]=malloc(4);
+    o[i]=malloc(4);
+  }
 	int cantOpciones=0;
 	for(i=0;i<11;i++){
 		if(mp->categorias[i]>=0){	//opcion disponible
@@ -338,7 +352,7 @@ int * fin_1_svc(puntajes * p,struct svc_req *cliente){
 
 int * inicio_1_svc(datosiniciales * n,struct svc_req *cliente){
 	printf("--------------COMIENZO DEL JUEGO----------------\n");
-	printf("--------Usted es el Jugador %i, suerte!---------\n",n->nroJugador+1);
+	printf("--------Usted es el Jugador %i, suerte!---------\n",(n->nroJugador)+1);
   cantJugadores=n->cantidadJugadores;
 	static int var;
   var = 1;
