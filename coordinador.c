@@ -45,7 +45,7 @@ int main(int argc,char *argv[]) {
   // Se inicia el juego, se envian los
   int ronda,jugador,tiros,tirada;
   for (ronda=0;ronda<11;ronda++){   // Se juegan 11 rondas.
-    for (jugador=0; jugador>cantJugadores; jugador++){  // Se juega el turno de cada jugador.
+    for (jugador=0; jugador<cantJugadores; jugador++){  // Se juega el turno de cada jugador.
       // Se envia la tabla con el puntaje de cada jugador sumado a que jugador le toca jugar.
       tablaPuntos.turnojugador=jugador;
       for(j=0;j<cantJugadores;j++){
