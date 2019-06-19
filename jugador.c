@@ -221,7 +221,11 @@ int * mostrarmipuntaje_1_svc(mipuntaje * mp, struct svc_req *cliente){
 	//orden: 1, 2, 3, 4, 5, 6, escalera, full, poker, generala, generala doble
 	int total=0;
 	int i;
+  //Creo que esto es la falla! Solucionado!!! (con malloc :|)
 	char* c[11];
+  for(i=0;i<11;i++){
+    c[i]=malloc(4);
+  }
 	for(i=0;i<11;i++){
 		if(mp->categorias[i]>=0){
 			total=total+mp->categorias[i];
