@@ -61,11 +61,9 @@ int main(int argc,char *argv[]) {
         }
         for(j=0;j<cantJugadores;j++){
           // Se envian los dados obtenidos a todos los jugadores.
-          if(j!=jugador)  // Caso especial para el jugador que esta en su turno
-            mostrardados_1(&dados,jugadores[j].clnt);
-          else
-            dados = *elegirdados_1(&dados,jugadores[j].clnt);
+          mostrardados_1(&dados,jugadores[j].clnt);
         }
+        dados = *elegirdados_1(&dados,jugadores[jugador].clnt);
         // Ver cuantos dados eligió y cuantos tiene que tirar otra vez;
         tiros = 5;
         for (j=0;j<5;j++) {

@@ -54,22 +54,22 @@ void dibujarLinea2(mano *dados){
   int i=0;
   for(i=0;i<5;i++){
     switch(dados->dados[i]){
-      case '1':{
+      case 1:{
         printf("|- - -|\t");
       }break;
-      case '2':{
+      case 2:{
         printf("|o - -|\t");
       }break;
-      case '3':{
+      case 3:{
         printf("|o - -|\t");
       }break;
-      case '4':{
+      case 4:{
         printf("|o - o|\t");
       }break;
-      case '5':{
+      case 5:{
         printf("|o - o|\t");
       }break;
-      case '6':{
+      case 6:{
         printf("|o - o|\t");
       }break;
     }
@@ -80,22 +80,22 @@ void dibujarLinea3(mano *dados){
   int i=0;
   for(i=0;i<5;i++){
     switch(dados->dados[i]){
-      case '1':{
+      case 1:{
         printf("|- o -|\t");
       }break;
-      case '2':{
+      case 2:{
         printf("|- - -|\t");
       }break;
-      case '3':{
+      case 3:{
         printf("|- o -|\t");
       }break;
-      case '4':{
+      case 4:{
         printf("|- - -|\t");
       }break;
-      case '5':{
+      case 5:{
         printf("|- o -|\t");
       }break;
-      case '6':{
+      case 6:{
         printf("|o - o|\t");
       }break;
     }
@@ -106,22 +106,22 @@ void dibujarLinea4(mano *dados){
   int i=0;
   for(i=0;i<5;i++){
     switch(dados->dados[i]){
-      case '1':{
+      case 1:{
         printf("|- - -|\t");
       }break;
-      case '2':{
+      case 2:{
         printf("|- - o|\t");
       }break;
-      case '3':{
+      case 3:{
         printf("|- - o|\t");
       }break;
-      case '4':{
+      case 4:{
         printf("|o - o|\t");
       }break;
-      case '5':{
+      case 5:{
         printf("|o - o|\t");
       }break;
-      case '6':{
+      case 6:{
         printf("|o - o|\t");
       }break;
     }
