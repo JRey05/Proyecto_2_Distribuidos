@@ -15,9 +15,14 @@ struct puntajesstruct {
 struct mipuntajestruct {
   int categorias[11];
 };
+struct datosinicialesstruct {
+  int cantidadJugadores;
+  int nroJugador;
+};
 typedef struct manostruct mano;
 typedef struct puntajesstruct puntajes;
 typedef struct mipuntajestruct mipuntaje;
+typedef struct datosinicialesstruct datosiniciales;
 program GENERALA {
   version VER1 {
     int mostrardados(mano) = 1;
@@ -26,6 +31,6 @@ program GENERALA {
     int mostrarmipuntaje(mipuntaje) = 4;
     int elegirmano(mipuntaje) = 5;
     int fin(puntajes) = 6;
-    int inicio(int) = 7;
+    int inicio(datosiniciales) = 7;
   } = 1;
 } = 0x200F0B01;

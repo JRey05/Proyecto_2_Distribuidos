@@ -20,7 +20,7 @@ int main(int argc,char *argv[]) {
   mipuntaje puntajeTurno;                     // Enviara los puntos que puede optar el jugador
   puntajes tablaPuntos;                       // Almacena los puntos de todos los jugadores y de quien es el turno.
   srandom(time(NULL));
-
+  datosiniciales ini;
   if (cantJugadores <= 1) {
     printf("Error en el llamado: \n \t coordinador ip1 ip2 ... Maximo 6 jugadores.\n");
     exit(1);
@@ -39,8 +39,10 @@ int main(int argc,char *argv[]) {
   }
   // Se establecio conexion con todos los jugadores.
   // Se envia la bienvenida y la cantidad de usuarios
+  ini.cantidadJugadores=cantJugadores;
   for (i=0;i<cantJugadores;i++){
-    inicio_1(&i,jugadores[i].clnt);
+    ini.nroJugador=j+1;
+    inicio_1(&ini,jugadores[i].clnt);
   }
   // Se inicia el juego, se envian los
   int ronda,jugador,tiros,tirada;

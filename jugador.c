@@ -42,7 +42,7 @@ void dibujar6(){
 	printf("|o - o|\n\n");
 };
 */
-
+int cantJugadores;
 void dibujarLinea1(mano *dados){
   int i=0;
   for(i=0;i<5;i++){
@@ -202,7 +202,7 @@ int * mostrarpuntajes_1_svc(puntajes * p,struct svc_req *cliente){
   printf("|------Jugador-------|--------Puntaje--------|\n");
   printf(" ____________________|_______________________\n");
   turn=p->turnojugador;
-  for(i=0;i<MAXJUGADORES;i++){
+  for(i=0;i<cantJugadores;i++){
   	pts=p->puntos[i];
   	printf(" ____________________|________________________\n");
   	if (turn-1==i){
@@ -332,9 +332,10 @@ int * fin_1_svc(puntajes * p,struct svc_req *cliente){
 	return(&var);
 }
 
-int * inicio_1_svc(int * n,struct svc_req *cliente){
+int * inicio_1_svc(datosiniciales * n,struct svc_req *cliente){
 	printf("--------------COMIENZO DEL JUEGO----------------\n");
-	printf("--------Usted es el Jugador %i, suerte!---------\n",*n+1);
+	printf("--------Usted es el Jugador %i, suerte!---------\n",n->nroJugador+1);
+  cantJugadores=n->cantidadJugadores;
 	static int var;
   var = 1;
 	return(&var);
