@@ -178,6 +178,9 @@ mano * elegirdados_1_svc(mano * m, struct svc_req *cliente){
 	static mano misdados;
 	int slen = strlen(s);
 	int i,num;
+  for(i=0;i<5;i++){
+    misdados.dados[i]=0;
+  }
 	int j=0;
 	for (i=0;i<slen;i++){		//recorro el string ingresado y capturo los primeros 5 digitos entre 1 y 5
 
@@ -198,9 +201,8 @@ mano * elegirdados_1_svc(mano * m, struct svc_req *cliente){
 		misdados.dados[k]==0;	//un 0 representa un dado que no fue elegido
 	}
   for(k=0;k<5;k++) {
-    printf("%d,",misdados.dados[k]);
+    printf("%i\n",misdados.dados[k]);
   }
-  printf("\n");
 	return &misdados;
 }
 
@@ -215,7 +217,7 @@ int * mostrarpuntajes_1_svc(puntajes * p,struct svc_req *cliente){
   for(i=0;i<cantJugadores;i++){
   	pts=p->puntos[i];
   	printf(" ____________________|________________________\n");
-  	if (turn-1==i){
+  	if (turn==i){
   		printf("|---->Jugador %i<----|----------%i----------|\n",i+1,pts);	//es el turno de este jugador
   	}
   	else{
