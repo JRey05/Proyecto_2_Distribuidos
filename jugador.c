@@ -312,7 +312,7 @@ int * elegirmano_1_svc(mipuntaje * mp,struct svc_req *cliente){
 	while(1){
 		printf("\nQue opcion elegis?\n");
 		scanf("%i",&e);
-		if((e>0)&&(e<cantOpciones)){
+		if((e>0)&&(e<=cantOpciones)){
 			//es una opcion valida
 			break;
 		}
@@ -325,28 +325,37 @@ int * elegirmano_1_svc(mipuntaje * mp,struct svc_req *cliente){
 
 
 int * fin_1_svc(puntajes * p,struct svc_req *cliente){
-	int i;
+  if(p->turnojugador>=MAXJUGADORES){
+    //Se gano por generala servida.
+    printf("----------------FIN DEL JUEGO----------------\n");
+    printf(" ____________________________________________\n");
+    int ganador = p->turnojugador-MAXJUGADORES;
+    printf("Ganador Jugador %i!!",ganador+1);
+  }
+  else {
+    int i;
   	int pts,turn,ganador;
   	int max=0;
   	printf("----------------FIN DEL JUEGO----------------\n");
   	printf(" ____________________________________________\n");
   	printf("|------Jugador-------|--------Puntaje--------|\n");
   	printf(" ____________________|_______________________\n");
-	turn=p->turnojugador;
-	for(i=0;i<MAXJUGADORES;i++){
-		pts=p->puntos[i];
-		if(pts>max){
-			ganador=i+1;
-		}
-		printf(" ____________________|________________________\n");
-		if (turn-1==i){
-			printf("|---->Jugador %i<----|----------%i----------|\n",i+1,pts);	//es el turno de este jugador
-		}
-		else{
-			printf("|-----Jugador %i-----|----------%i----------|\n",i+1,pts);
-		}
-	}
-	printf("Ganador Jugador %i!!",ganador);
+	  turn=p->turnojugador;
+	  for(i=0;i<MAXJUGADORES;i++){
+  		pts=p->puntos[i];
+  		if(pts>max){
+  			ganador=i+1;
+  		}
+  		printf(" ____________________|________________________\n");
+  		if (turn-1==i){
+  			printf("|---->Jugador %i<----|----------%i----------|\n",i+1,pts);	//es el turno de este jugador
+  		}
+  		else{
+  			printf("|-----Jugador %i-----|----------%i----------|\n",i+1,pts);
+  		}
+  	}
+	  printf("Ganador Jugador %i!!",ganador);
+  }
 	static int var;
   var = 1;
 	return(&var);

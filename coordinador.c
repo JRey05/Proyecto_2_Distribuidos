@@ -121,8 +121,13 @@ int main(int argc,char *argv[]) {
 
       // Generala
       if(jugada[0]==5 || jugada[1]==5 || jugada[2]==5 || jugada[3]==5 || jugada[4]==5 || jugada[5]==5)
-      if(tirada==1){}
-        //WINNER{
+      if(tirada==1){
+        //WINNER
+        tablaPuntos.turnojugador=jugador+MAXJUGADORES; //El jugador recibira un numero mayor a la cantidad de jugadores, de esta manera determina que el jugador gano por generala servida
+        for(i=0;i<cantJugadores;i++)
+          fin_1(&tablaPuntos,jugadores[i].clnt);
+        exit(0);
+      }
       else
         puntajeTurno.categorias[9] = 50;
 
