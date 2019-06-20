@@ -156,4 +156,7 @@ int main(int argc,char *argv[]) {
         tablaPuntos.puntos[jugador]+=puntajeTurno.categorias[i-1];
     }
   }
+  for (i=0;i<cantJugadores;i++){
+    fin_1(&tablaPuntos,jugadores[i].clnt);
+  }
 }
