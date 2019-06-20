@@ -41,7 +41,7 @@ int main(int argc,char *argv[]) {
   // Se envia la bienvenida y la cantidad de usuarios
   ini.cantidadJugadores=cantJugadores;
   for (i=0;i<cantJugadores;i++){
-    ini.nroJugador=i+1;
+    ini.nroJugador=i;
     inicio_1(&ini,jugadores[i].clnt);
   }
   // Se inicia el juego, se envian los
@@ -148,7 +148,7 @@ int main(int argc,char *argv[]) {
         jugadores[jugador].puntaje.categorias[i-1]=puntajeTurno.categorias[i-1];
       }
       if(puntajeTurno.categorias[i-1]!=0)
-        tablaPuntos.puntos[jugador]+=puntajeTurno.categorias[opcion-1];
+        tablaPuntos.puntos[jugador]+=puntajeTurno.categorias[i-1];
     }
   }
 }
