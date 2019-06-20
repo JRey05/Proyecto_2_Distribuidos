@@ -142,7 +142,7 @@ int main(int argc,char *argv[]) {
         }
       }
       if(puntajeTurno.categorias[i-1]==0){
-        jugadores[jugador].puntaje.categorias[i-1]=-1
+        jugadores[jugador].puntaje.categorias[i-1]=-1;
       }
       else{
         jugadores[jugador].puntaje.categorias[i-1]=puntajeTurno.categorias[i-1];
