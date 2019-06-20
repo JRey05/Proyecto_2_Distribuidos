@@ -136,9 +136,18 @@ int main(int argc,char *argv[]) {
           puntajeTurno.categorias[i]=-1;
       }
       opcion = *elegirmano_1(&puntajeTurno,jugadores[jugador].clnt);
-      printf("loquesea\n");
-      jugadores[jugador].puntaje.categorias[opcion-1]=puntajeTurno.categorias[opcion-1];
-      if(puntajeTurno.categorias[opcion-1]!=-1)
+      for(i=0;i<11 && opcion!=0;i++){
+        if(puntajeTurno.categorias[i]!=-1){
+          opcion--;
+        }
+      }
+      if(puntajeTurno.categorias[i-1]==0){
+        jugadores[jugador].puntaje.categorias[i-1]=-1
+      }
+      else{
+        jugadores[jugador].puntaje.categorias[i-1]=puntajeTurno.categorias[i-1];
+      }
+      if(puntajeTurno.categorias[i-1]!=0)
         tablaPuntos.puntos[jugador]+=puntajeTurno.categorias[opcion-1];
     }
   }
