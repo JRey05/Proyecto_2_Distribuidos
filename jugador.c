@@ -4,44 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-/*
-void dibujar1(){
-	printf(" _____\n");
-	printf("|- - -|\n");
-	printf("|- o -|\n");
-	printf("|- - -|\n\n");
-};
-void dibujar2(){
-	printf(" _____\n");
-	printf("|- - o|\n");
-	printf("|- - -|\n");
-	printf("|o - -|\n\n");
-};
-void dibujar3(){
-	printf(" _____\n");
-	printf("|o - -|\n");
-	printf("|- o -|\n");
-	printf("|- - o|\n\n");
-};
-void dibujar4(){
-	printf(" _____\n");
-	printf("|o - o|\n");
-	printf("|- - -|\n");
-	printf("|o - o|\n\n");
-};
-void dibujar5(){
-	printf(" _____\n");
-	printf("|o - o|\n");
-	printf("|- o -|\n");
-	printf("|o - o|\n\n");
-};
-void dibujar6(){
-	printf(" _____\n");
-	printf("|o - o|\n");
-	printf("|o - o|\n");
-	printf("|o - o|\n\n");
-};
-*/
 int cantJugadores;
 void dibujarLinea1(mano *dados){
   int i=0;
@@ -133,33 +95,6 @@ void dibujarLinea5(){
 }
 
 int * mostrardados_1_svc(mano * m, struct svc_req *cliente){
-	/*
-	printf("------------------------------------------------------\n");
-	int i;
-	for(i=0;i++;i<6){
-		switch (m->dados[i]){		//dado nro i
-			case 1:
-				dibujar1();
-				break;
-			case 2:
-				dibujar2();
-				break;
-			case 3:
-				dibujar3();
-				break;
-			case 4:
-				dibujar4();
-				break;
-			case 5:
-				dibujar5();
-				break;
-			case 6:
-				dibujar6();
-				break;
-		}
-		printf("\t(%i)\n\n",i);		//dibujo un (1) debajo del primer dado, un (2) debajo del 2do, y asi...
-	}
-	*/
 	dibujarLinea1(m);
 	dibujarLinea2(m);
 	dibujarLinea3(m);
@@ -189,7 +124,6 @@ mano * elegirdados_1_svc(mano * m, struct svc_req *cliente){
 			if ((num<6)&&(num>0)){
 				misdados.dados[j]=m->dados[num-1];
 				j++;
-        printf("%i\n",num);
 			}
 		}
 		if (j==5) {		//ya encontre 5 digitos en el mensaje, estos seran los dados, salgo del bucle for
@@ -200,9 +134,7 @@ mano * elegirdados_1_svc(mano * m, struct svc_req *cliente){
 	for (k=5;k<j;k--){
 		misdados.dados[k]==0;	//un 0 representa un dado que no fue elegido
 	}
-  for(k=0;k<5;k++) {
-    printf("%i\n",misdados.dados[k]);
-  }
+  
 	return &misdados;
 }
 
@@ -341,7 +273,7 @@ int * fin_1_svc(puntajes * p,struct svc_req *cliente){
   	printf("|------Jugador-------|--------Puntaje--------|\n");
   	printf(" ____________________|_______________________\n");
 	  turn=p->turnojugador;
-	  for(i=0;i<MAXJUGADORES;i++){
+	  for(i=0;i<cantJugadores;i++){
   		pts=p->puntos[i];
   		if(pts>max){
   			ganador=i+1;
@@ -354,7 +286,7 @@ int * fin_1_svc(puntajes * p,struct svc_req *cliente){
   			printf("|-----Jugador %i-----|----------%i----------|\n",i+1,pts);
   		}
   	}
-	  printf("Ganador Jugador %i!!",ganador);
+	  printf("Ganador Jugador %i!!\n",ganador);
   }
 	static int var;
   var = 1;
